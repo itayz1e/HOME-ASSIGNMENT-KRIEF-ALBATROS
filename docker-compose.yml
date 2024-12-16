@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: document-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=document_pipeline
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Ah14432ewe
+
+  db:
+    image: postgres:13
+    container_name: document-db
+    environment:
+      POSTGRES_DB: document_pipeline
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Ah14432ewe
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
