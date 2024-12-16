@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   api:
     build: .
@@ -11,10 +9,7 @@ services:
     depends_on:
       - db
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_DB=document_pipeline
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ah14432ewe
+      - DB_HOST=db
 
   db:
     image: postgres:13

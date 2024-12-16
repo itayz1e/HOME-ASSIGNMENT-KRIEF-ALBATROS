@@ -42,3 +42,7 @@ To upload files to the API, use Postman or any HTTP client with the following st
     Description: Uploads a file, stores metadata in the database, and processes it asynchronously.
     Request Body: key = "file" value = select file
     Response: documentId of the uploaded document.
+
+
+
+This project was created by [Itay Amosi](https://github.com/itayz1e). Feel free to reach out if you have any questions or feedback.
