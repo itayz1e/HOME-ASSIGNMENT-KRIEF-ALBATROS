@@ -17,12 +17,41 @@ const pool = new Pool({
   port: 5432,
 });
 
+
+const createTablesIfNotExist = async () => {
+    try {
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS documents (
+                id SERIAL PRIMARY KEY,
+                filename TEXT NOT NULL,
+                original_name TEXT NOT NULL,
+                upload_time TIMESTAMP NOT NULL,
+                status TEXT NOT NULL
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS processed_data (
+                id SERIAL PRIMARY KEY,
+                document_id INT REFERENCES documents(id) ON DELETE CASCADE,
+                data JSONB NOT NULL
+            );
+        `);
+
+        console.log('Tables are ready!');
+    } catch (err) {
+        console.error('Error creating tables:', err);
+    }
+};
+
+
+createTablesIfNotExist();
+
 app.post("/upload", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-
     const { originalname, filename } = req.file;
     const uploadTime = new Date();
 
